@@ -1,0 +1,26 @@
+spec: "0.0"
+name: gadget-spi-loader
+uuid: 61a15157-d3ba-4466-bbce-01aa708a47e9
+type: docker
+onboot:
+- name: spi-loader
+  uuid: 1861fdfb-4d28-40f6-befa-2bccc26c08aa
+  image: ''
+  directory: gadget-spi-loader
+  net: ''
+  readonly: false
+  command: ['/bin/sh', 'spiselect.sh']
+  binds: ['/sys:/sys', '/lib/modules:/lib/modules']
+  capabilities: ['ALL']
+  devices: []
+services:
+- name: fbi-display
+  uuid: 397018bd-66b2-40a8-a3d9-3266034ffd9e
+  image: ''
+  directory: fbi-display
+  net: ''
+  readonly: false
+  command: []
+  binds: ['/sys:/sys']
+  capabilities: ['SYS_RAWIO', 'SYS_TTY_CONFIG']
+  devices: ['/dev/fb0', '/dev/tty1', '/dev/mem']
