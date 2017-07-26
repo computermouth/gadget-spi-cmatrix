@@ -1,26 +1,36 @@
 spec: "0.0"
-name: gadget-spi-loader
+name: gadget-spi-cmatrix
 uuid: 61a15157-d3ba-4466-bbce-01aa708a47e9
 type: docker
 onboot:
-- name: spi-loader
-  uuid: 1861fdfb-4d28-40f6-befa-2bccc26c08aa
-  image: ''
-  directory: gadget-spi-loader
-  net: ''
+- name: init-spi
+  uuid: 1861fdfb-4d29-40f6-befa-2bccc26c08aa
+  image: ""
+  directory: init-spi
+  net: ""
   readonly: false
-  command: ['/bin/sh', 'spiselect.sh']
-  binds: ['/sys:/sys', '/lib/modules:/lib/modules']
-  capabilities: ['ALL']
+  command: ['/init.sh']
+  binds: ['/sys:/sys']
+  capabilities: [SYS_RAWIO]
+  devices: []
+- name: init-modules
+  uuid: fa2ebe72-1eed-4327-8037-88d06ca1e623
+  image: ""
+  directory: init-modules
+  net: ""
+  readonly: false
+  command: ['/probe.sh']
+  binds: ['/lib/modules:/lib/modules']
+  capabilities: [SYS_MODULE]
   devices: []
 services:
-- name: fbi-display
-  uuid: 397018bd-66b2-40a8-a3d9-3266034ffd9e
-  image: ''
-  directory: fbi-display
-  net: ''
+- name: cmatrix
+  uuid: 397018bd-66b1-40a8-a3d9-3266034ffd9e
+  image: ""
+  directory: cmatrix
+  net: ""
   readonly: false
-  command: []
-  binds: ['/sys:/sys']
-  capabilities: ['SYS_RAWIO', 'SYS_TTY_CONFIG']
-  devices: ['/dev/fb0', '/dev/tty1', '/dev/mem']
+  command: ['/cmatrix.sh']
+  binds: []
+  capabilities: [SYS_RAWIO, SYS_TTY_CONFIG]
+  devices: [/dev/fb0, /dev/tty1]

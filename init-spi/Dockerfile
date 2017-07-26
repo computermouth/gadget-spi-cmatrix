@@ -24,8 +24,5 @@ RUN apk update && apk add make && apk add gcc && apk add g++ && \
 
 FROM arm32v7/busybox
 
-COPY --from=build /lib/firmware/nextthingco /lib/firmware/nextthingco
-ADD spiselect.sh /
-
-CMD ["/bin/sh", "/spiselect.sh"]
-
+COPY --from=build /lib/firmware/nextthingco/chip/sample-spi-chippro.dtbo /
+ADD init.sh /
